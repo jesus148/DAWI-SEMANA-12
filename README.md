@@ -1,5 +1,5 @@
-### Consultas
 
-## Autor ✒️
 
-* **Jorge Jacinto ** - [jorgejacinto9701](https://github.com/jorgejacinto9701)
+SEMANA 12 CONSULTA COMPLEJA EMPLEADO > CON JASPER REPORT CON ICONO(YA TERMINADO)
+
+TAREA EXTRA > CONSULTA CLIENTE (FALTA)
