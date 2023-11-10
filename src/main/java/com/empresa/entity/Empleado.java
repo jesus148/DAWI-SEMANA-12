@@ -1,5 +1,6 @@
 package com.empresa.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -47,6 +48,33 @@ public class Empleado {
 	@ManyToOne
 	@JoinColumn(name = "idPais")
 	private Pais pais;
+	
+	
+	
+	
+	
+	
+	
+	
+	//atributos para el reporte estado
+	public String getReporteEstado() {
+		return estado == 1? "Activo" : "Inactivo";
+		
+	}
+	
+	public String getReportePais() {
+		return pais.getIdPais() + "- "+  pais.getNombre();
+		
+	}
+	
+	
+	public String getReporteFechaNacimiento() {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(fechaNacimiento);
+		
+	}
+	
+	
 }
 
 

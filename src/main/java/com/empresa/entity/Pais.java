@@ -19,4 +19,8 @@ public class Pais {
 	private int idPais;
 	private String iso;
 	private String nombre;
+	
+	
+	
+	
 }

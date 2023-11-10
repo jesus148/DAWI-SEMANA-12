@@ -19,7 +19,7 @@
 
 <form id="id_form"> 
 	<div class="container">
-		<h3>Consulta Empleado</h3>
+		<h3>Consulta Cliente</h3>
 		<div class="row" style="margin-top: 3%">
 			<div class="col-md-6">
 				<label class="control-label" for="id_nombres">Nombres y	Apellidos</label> 
@@ -32,22 +32,13 @@
 		</div>
 		<div class="row" style="margin-top: 2%">
 			<div class="col-md-6">
-				<label class="control-label" for="id_desde">Fecha Nacimiento (Desde) </label> 
-				<input class="form-control" type="date" id="id_desde" name="paramDesde" value="1990-01-01">
+				<label class="control-label" for="id_dni">DNI</label>
+				<input class="form-control" id="id_dni" name="dni" placeholder="Ingrese el número de dni" type="text" maxlength="8"/>
+
 			</div>
-			<div class="col-md-6">
-				<label class="control-label" for="id_hasta">(Hasta) </label>              <!-- valor por defecto en la fecha -->
-				<input class="form-control" type="date" id="id_hasta" name="paramHasta" value="2900-01-01">
-			</div>
+
 		</div>
-		<div class="row" style="margin-top: 2%">
-			<div class="col-md-6">
-				<label class="control-label" for="id_pais">País</label> 
-				<select id="id_pais" name="paramPais" class='form-control'>
-					<option value="-1">[ Todos ]</option>
-				</select>
-			</div>
-		</div>
+
 		<div class="row" style="margin-top: 3%">
 			<div class="col-md-12" align="center">
 				<button type="button" class="btn btn-primary" id="id_btn_filtra">FILTRA</button>
@@ -61,10 +52,10 @@
 						<tr>
 							<th style="width: 5%">ID</th>
 							<th style="width: 22%">Nombre</th>
-							<th style="width: 23%">Apellidos</th>
-							<th style="width: 15%">Fecha Nacimiento</th>
+							<th style="width: 23%">DNI</th>
+							<th style="width: 15%">ESTADO</th>
 							<th style="width: 15%">País</th>
-							<th style="width: 15%">Estado</th>
+							<th style="width: 15%">CATEGORIA</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -76,11 +67,6 @@
 	</form>
 <script type="text/javascript">
 
-$.getJSON("listaPais", {}, function(data){
-	$.each(data, function(i,item){
-		$("#id_pais").append("<option value="+item.idPais +">"+ item.nombre +"</option>");
-	});
-});
 
 
 
@@ -111,27 +97,22 @@ $("#id_btn_reporte").click(function(){
 
 $("#id_btn_filtra").click(function(){
 	var varEstado = $("#id_estado").is(':checked') ? 1 : 0;  
-	var varPais = $("#id_pais").val();
+
 	var varNomApe = $("#id_nombres").val();
-	var varFecDesde = $("#id_desde").val() == '' ?'1900-01-01' : $("#id_desde").val();
-	var varFecHasta = $("#id_hasta").val() == '' ?'9999-01-01' : $("#id_hasta").val();
+	var varDni = $("#id_dni").val();
+
 	
 	console.log(">> varEstado >> " + varEstado );
-	console.log(">> varPais >> " + varPais );
 	console.log(">> varNomApe >> " + varNomApe );
-	console.log(">> varFecDesde >> " + varFecDesde );
-	console.log(">> varFecHasta >> " + varFecHasta );
+	console.log(">> varDni >> " + varDni );
+
+
+
 	
-	if (valFechaInicioMayFechaFin("#id_desde", "#id_hasta")){
-		mostrarMensaje("La fecha hasta es superior a la fecha desde");
-		return;
-	}
-	
-	$.getJSON("consultaEmpleado", {"estado": varEstado, 
-								   "idPais": varPais, 
-								   "nomApe": varNomApe, 
-								   "desde": varFecDesde, 
-								   "hasta": varFecHasta }, function(data){
+	$.getJSON("consultaCliente", {"estado": varEstado, 
+								   "nombre": varNomApe, 
+								   "dni": varDni
+								   }, function(data){
 		agregarGrilla(data);
 	});
 });
@@ -148,9 +129,9 @@ function agregarGrilla(lista){
 			pageLength: 10,
 			lengthChange: false,
 			columns:[
-				{data: "idEmpleado"},
-				{data: "nombres"},
-				{data: "apellidos"},
+				{data: "idCliente"},
+				{data: "nombre"},
+				{data: "dni"},
 				{data: "fechaNacimiento"},
 				{data: "pais.nombre"},
 				{data: function(row, type, val, meta){

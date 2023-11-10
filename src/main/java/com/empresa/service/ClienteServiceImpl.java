@@ -28,4 +28,14 @@ public class ClienteServiceImpl implements ClienteService{
 	public List<Cliente> listaPorNombre(String nombre) {
 		return repository.findByNombre(nombre);
 	}
+
+	@Override
+	public List<Cliente> listaConsultaCliente(int estado, String nombre, String dni) {
+
+		return repository.listaConsultaCliente(estado, nombre, dni);
+	}
+	
+	
+	
+	
 }
